@@ -12,12 +12,11 @@ import org.jsoup.select.*;
 
 public class Controller {
 	
-	static JSONObject historicalDataJson(String asin) throws Exception{
+	static JSONObject historicalDataJson(String asin, int days) throws Exception{
 		String tracktorSN = getTracktorSN(asin);
-		String dataUrl = "https://thetracktor.com/ajax/prices/?id="+tracktorSN+"&days=90";
+		String dataUrl = "https://thetracktor.com/ajax/prices/?id="+tracktorSN+"&days="+days;
 		String urlDataString = urlDataString(dataUrl);
-		JSONObject jsonObject = new JSONObject(urlDataString);
-		return jsonObject;
+		return new JSONObject(urlDataString);
 	}
 	
 	static String getUrlContents(String theUrl) throws IOException
@@ -28,6 +27,7 @@ public class Controller {
 		sc.close();
 		return urlContent;
 	  }
+	
 	static String urlDataString(String dataUrl) throws IOException{
 		String urlContent = null;
 		URL url = new URL(dataUrl);
