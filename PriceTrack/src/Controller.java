@@ -14,12 +14,20 @@ public class Controller {
 	
 	static JSONObject historicalDataJson(String asin) throws Exception{
 		String tracktorSN = getTracktorSN(asin);
-		String dataUrl = "https://thetracktor.com/ajax/prices/?id="+tracktorSN+"=90";
+		String dataUrl = "https://thetracktor.com/ajax/prices/?id="+tracktorSN+"&days=90";
 		String urlDataString = urlDataString(dataUrl);
 		JSONObject jsonObject = new JSONObject(urlDataString);
 		return jsonObject;
 	}
 	
+	static String getUrlContents(String theUrl) throws IOException
+	  {
+		URL url = new URL(theUrl);
+		Scanner sc = new Scanner(url.openStream(), "UTF-8");
+		String urlContent = sc.useDelimiter("\\A").next();
+		sc.close();
+		return urlContent;
+	  }
 	static String urlDataString(String dataUrl) throws IOException{
 		String urlContent = null;
 		URL url = new URL(dataUrl);
