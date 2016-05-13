@@ -34,7 +34,7 @@ public class Main extends Application{
 		Scene scene=new Scene(pane);
 		primaryStage.setScene(scene);        
 		primaryStage.setTitle("Price Tracker");        
-		primaryStage.showAndWait(); 
+		primaryStage.show(); 
 		btn.setOnAction(new EventHandler<ActionEvent>(){
 			public void handle(ActionEvent e){
 					
