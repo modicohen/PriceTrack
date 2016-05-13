@@ -1,5 +1,7 @@
 import java.io.IOException;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,11 +17,14 @@ public class Main extends Application{
 	}
 		//The button and text field
 		@Override public void start(Stage primaryStage) throws IOException    {
-		btn=new Button();
+		btn=new Button("Search!");
 		TextField search=new TextField();
 		//Setting font to Verdana 20 for button and text
 		btn.setFont(Font.font("Verdana",20));
-		btn.setText("Search!");
+		
+		//Listening for a click on the start
+		
+		
 		search.setFont(Font.font("Verdana",20));
 		//Adding text field and button to GridPane
 		GridPane pane = new GridPane();
@@ -29,6 +34,19 @@ public class Main extends Application{
 		Scene scene=new Scene(pane);
 		primaryStage.setScene(scene);        
 		primaryStage.setTitle("Price Tracker");        
-		primaryStage.show();  
+		primaryStage.showAndWait(); 
+		btn.setOnAction(new EventHandler<ActionEvent>(){
+			public void handle(ActionEvent e){
+					
+					primaryStage.close();
+					
+				}
+				
+			
+		});
 		}
-}
+		
+		}	
+	
+
+
