@@ -84,7 +84,6 @@ public class ProductGraphScreenController
 				
 				ProductData productData = new ProductData(date, prices);
 				productPrices.add(productData);
-				
 			}
 			
 			Collections.sort(productPrices);
@@ -103,9 +102,26 @@ public class ProductGraphScreenController
 		ObservableList<XYChart.Data<String, Double>> newPricesList = FXCollections.observableArrayList();
 		ObservableList<XYChart.Data<String, Double>> usedPricesList = FXCollections.observableArrayList();
 		
+		Double prevNewPrice = 0.0; 
+		Double prevUsedPrice = 0.0;
+		
 		for (ProductData productData : productPrices) {
-			newPricesList.add(new XYChart.Data<String, Double>(productData.getDate().toString(), productData.getNewPrice()));
-			usedPricesList.add(new XYChart.Data<String, Double>(productData.getDate().toString(), productData.getUsedPrice()));
+			Double newPrice = productData.getNewPrice();
+			Double usedPrice = productData.getUsedPrice();
+			
+			if (newPrice != null) {
+				newPricesList.add(new XYChart.Data<String, Double>(productData.getDate().toString(),productData.getNewPrice()));
+				prevNewPrice = newPrice;
+			}
+			else if (prevNewPrice != null) 
+				newPricesList.add(new XYChart.Data<String,Double>(productData.getDate().toString(),prevNewPrice));
+			
+			if (usedPrice != null) {
+				usedPricesList.add(new XYChart.Data<String, Double>(productData.getDate().toString(),productData.getUsedPrice()));
+				prevUsedPrice = usedPrice;
+			}
+			else if (prevUsedPrice != null) 
+				usedPricesList.add(new XYChart.Data<String, Double>(productData.getDate().toString(),prevUsedPrice));
 		}
 		
 		newPrices.setData(newPricesList);

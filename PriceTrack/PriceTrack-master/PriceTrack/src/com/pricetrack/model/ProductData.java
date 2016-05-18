@@ -3,7 +3,6 @@ package com.pricetrack.model;
 import java.util.Date;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 public class ProductData implements Comparable<ProductData>
 {
@@ -16,12 +15,12 @@ public class ProductData implements Comparable<ProductData>
 		this.prices = prices;
 	}
 
-	public double getNewPrice()
+	public Double getNewPrice()
 	{
 		return getValueAtIndexFromPrices(0);
 	}
 	
-	public double getUsedPrice()
+	public Double getUsedPrice()
 	{
 		return getValueAtIndexFromPrices(1);
 	}
@@ -35,15 +34,33 @@ public class ProductData implements Comparable<ProductData>
 	@Override
 	public String toString()
 	{
-		return date + " [New: " + getNewPrice() + "], [Used: " + getUsedPrice() + "]";
+		Double newPriceDouble = getNewPrice();
+		String newPrice = "NULL";
+		if (newPriceDouble != null) {
+			newPrice = Double.toString(newPriceDouble);
+		}
+		
+		Double usedPriceDouble = getUsedPrice();
+		String usedPrice = "NULL";
+		if (usedPriceDouble != null) {
+			usedPrice = Double.toString(usedPriceDouble);
+		}
+		
+		return date + " [New: " + newPrice + "], [Used: " + usedPrice + "]";
 	}
 	
-	private double getValueAtIndexFromPrices(int i) 
+	private Double getValueAtIndexFromPrices(int i) 
 	{
-		try { return Double.parseDouble((String) prices.get(i));} 
-		catch (JSONException e) { e.printStackTrace();}
-		
-		return 0;
+		try {
+			Object priceObj = prices.get(i);
+			if (priceObj == null) return null;
+			
+			return Double.parseDouble((String) priceObj);
+		} 
+		catch (Exception e) { 
+			e.getMessage();
+			return (Double) null;
+		}
 	}
 	
 	public Date getDate() {return date;}
