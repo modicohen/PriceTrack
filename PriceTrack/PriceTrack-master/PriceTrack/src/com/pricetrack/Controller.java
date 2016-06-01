@@ -64,7 +64,7 @@ public class Controller {
 		String tracktorQueryResaults = "", tracktorSN = "";
 		Document doc = Jsoup.connect("https://thetracktor.com/detail/"+asin+"/").timeout(10000).get();
 		Elements scriptElements = doc.getElementsByTag("script");
-		Pattern pattern = Pattern.compile("Tracktor\\.trackItem\\((.*?),");
+		Pattern pattern = Pattern.compile("Tracktor\\.loadPrices\\( (.*?),");
 
 		for (Element element : scriptElements ) {                
 			for (DataNode node : element.dataNodes()) {
